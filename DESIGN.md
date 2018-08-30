@@ -63,12 +63,41 @@ Multiple tags on a document can have the same key.
 **Example:**
 The transcript of a meeting might be tagged
 `topic:acquisition of members, topic:communication problems, topic:open house`
-to tell us that all three of those topics were discussed.
+to tell us that all three of these topics were discussed.
 For details we would have to open the file using suitable external software.
 
-## Meta^2^data
+## Meta²data
+
+Metadata about tags might be interesting,
+e.g. that the tag `meeting no:347` was added on 2018-08-30 by j-k.
+In a similar vein,
+distributed version control seems like a good idea.
+Actionable plans have been offered for neither so far.
 
 ## Typing
+
+Obviously, any sensible tag key will have a type associated with it
+that the values should adhere to,
+for example after an `author:` key,
+we might want an identifier for a person.
+To achieve such a goal, various approaches might be viable.
+
+### Strings
+
+Most things can be modelled as strings.
+A quick and dirty approach could thus model a tag as a `(String, String)` pair.
+
+### Strong typing
+
+Employing metaprogramming or a language that has type variables
+would allow the usage of established type systems for our own goals.
+This seems like a clean and desirable solution
+but I am not well-versed enough in any such technology
+to seriously consider it for the first draft.
+
+### Hacky ad-hoc horror
+
+Implementing a custom run-time type system might be an option as well.
 
 # Identifications
 
