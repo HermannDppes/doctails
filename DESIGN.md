@@ -113,3 +113,19 @@ We are going to use UUIDs in version 4 since all others do not seem sensible:
 	I do not have any sensible way to determine any “names” of blobs.
 
 Version 4 are simply random UUIDs.
+
+# Storage
+
+Stuff needs to be stored somewhere.
+
+## Blobs
+
+Blobs will simply be stored on an available file system.
+Rationale: File systems usually are good at storing files.
+
+## Metadata
+
+To allow efficient queries,
+at some point we probably want to have a proper database backend.
+Until then, I might try to auto-derive serialisations of data structures.
+Thats just hacky enough to seem like an acceptable intermediate solution.
