@@ -103,3 +103,13 @@ Implementing a custom run-time type system might be an option as well.
 
 I plan on simply using UUIDs for identifying documents
 since using established mechanisms beats creativity any time.
+
+## UUID version
+
+We are going to use UUIDs in version 4 since all others do not seem sensible:
+* Version 1 leaks MAC addresses.
+* Version 2 is not supported by the rust crate.
+* Version 3 and 5 use namespaces / names and hash those.
+	I do not have any sensible way to determine any “names” of blobs.
+
+Version 4 are simply random UUIDs.
