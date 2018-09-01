@@ -1,3 +1,7 @@
+extern crate uuid;
+use uuid::Uuid;
+
 fn main() {
-    println!("Hello, world!");
+	let uuid = Uuid::new_v4();
+	println!("{}", uuid.hyphenated());
 }

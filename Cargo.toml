@@ -1,6 +1,7 @@
 [package]
 name = "doctails"
-version = "0.1.0"
+version = "0.0.0"
 authors = ["Hermann Döppes"]
 
 [dependencies]
+uuid = { version = "0.6", features = ["serde", "v4"] }
