@@ -3,13 +3,33 @@ use uuid::Uuid;
 
 use std::path::Path;
 
+use std::ffi::OsStr;
+
+use std::collections::HashMap;
+
 #[macro_use]
 extern crate clap;
 use clap::{Arg, App, SubCommand};
 
-fn adopt(path: &Path) {
-	let uuid = Uuid::new_v4();
-	println!("{} adopted as {}", path.to_str().unwrap(), uuid.hyphenated());
+#[derive(Debug)]
+struct Doc<'a> {
+	filename: &'a OsStr
+}
+
+#[derive(Debug)]
+struct Pack<'a> {
+	docs: HashMap<Uuid, Doc<'a>>
+}
+
+impl<'a> Pack<'a> {
+	fn adopt(&'a mut self, path: &'a Path) {
+		let uuid = Uuid::new_v4();
+		let doc = Doc {
+			filename: path.file_name().unwrap()
+		};
+		self.docs.insert(uuid, doc);
+		println!("We are now {:?}", self);
+	}
 }
 
 fn main() {
@@ -27,7 +47,11 @@ fn main() {
 		.subcommand(sc_adopt)
 		.get_matches();
 
+	let mut pack = Pack {
+		docs: HashMap::new()
+	};
+
 	if let Some(sub_matches) = matches.subcommand_matches("adopt") {
-		adopt(Path::new(sub_matches.value_of("PATH").unwrap()));
+		pack.adopt(Path::new(sub_matches.value_of("PATH").unwrap()));
 	}
 }
