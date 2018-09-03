@@ -1,5 +1,7 @@
 # DocTails
 
+![build](https://travis-ci.org/HermannDppes/doctails.svg?branch=master)
+
 It's about pinning tails on documents.
 
 # Explanation
