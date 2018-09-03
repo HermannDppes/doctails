@@ -25,7 +25,7 @@ pub fn config<'a>(
 ) -> ui::Config<'a> {
 	let pack = ();
 	let action = get_action(matches);
-	ui::Config {pack, action}
+	ui::Config {action}
 }
 
 fn get_action<'a>(matches: &'a ArgMatches<'a>) -> ui::Action<'a> {
@@ -40,10 +40,17 @@ fn get_action<'a>(matches: &'a ArgMatches<'a>) -> ui::Action<'a> {
 }
 
 pub fn run(config: ui::Config) {
-	let mut pack = Pack::new();
+	let mut pack = get_pack();
 	match config.action {
 		ui::Action::Adopt(path) => pack.adopt(path)
 	}
 	let mut packfile = File::create("pack").expect("Failed to open file");
 	serde_cbor::to_writer(&mut packfile, &pack).expect("Failed to write");
+}
+
+fn get_pack() -> Pack {
+	match File::open("pack") {
+		Ok(file) => serde_cbor::from_reader(file).unwrap(),
+		Err(_) => Pack::new()
+	}
 }

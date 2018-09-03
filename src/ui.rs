@@ -5,6 +5,5 @@ pub enum Action<'a> {
 }
 
 pub struct Config<'a> {
-	pub pack: (),
 	pub action: Action<'a>
 }
