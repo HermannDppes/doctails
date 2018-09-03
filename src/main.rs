@@ -9,7 +9,6 @@ use std::collections::HashMap;
 
 #[macro_use]
 extern crate clap;
-use clap::{Arg, App, SubCommand};
 
 #[derive(Debug)]
 struct Doc<'a> {
@@ -17,7 +16,7 @@ struct Doc<'a> {
 }
 
 #[derive(Debug)]
-struct Pack<'a> {
+pub struct Pack<'a> {
 	docs: HashMap<Uuid, Doc<'a>>
 }
 
@@ -30,28 +29,20 @@ impl<'a> Pack<'a> {
 		self.docs.insert(uuid, doc);
 		println!("We are now {:?}", self);
 	}
+
+	fn new() -> Pack<'a> {
+		Pack {
+			docs: HashMap::new()
+		}
+	}
 }
 
+mod cli;
+
 fn main() {
-	let app = App::new("doctails")
-		.about("Pins Tails on Docs.")
-		.author("Hermann Döppes <hermannd.ouml.ppes@gmail.com>")
-		.version(crate_version!());
-	let sc_adopt = SubCommand::with_name("adopt")
-		.about("Adopt a new Doc.")
-		.arg(Arg::with_name("PATH")
-			.help("Path to the document / blob that should be taken in")
-			.required(true)
-		);
-	let matches = app
-		.subcommand(sc_adopt)
-		.get_matches();
+	let matches = cli::doctails().get_matches();
 
-	let mut pack = Pack {
-		docs: HashMap::new()
-	};
+	let mut pack = Pack::new();
 
-	if let Some(sub_matches) = matches.subcommand_matches("adopt") {
-		pack.adopt(Path::new(sub_matches.value_of("PATH").unwrap()));
-	}
+	cli::run(&mut pack, &matches);
 }
