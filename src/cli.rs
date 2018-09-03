@@ -1,5 +1,6 @@
 use clap::{Arg, App, SubCommand, ArgMatches};
 use std::path::Path;
+use super::*;
 
 pub fn doctails<'a, 'b>() -> App<'a, 'b> {
 	let app = App::new("doctails")
@@ -18,8 +19,28 @@ fn adopt<'a, 'b>() -> App<'a, 'b> {
 	sc.arg(path)
 }
 
-pub fn run<'a>(pack: &'a mut super::Pack<'a>, matches: &'a ArgMatches<'a>) {
-	if let Some(sub_matches) = matches.subcommand_matches("adopt") {
-		pack.adopt(Path::new(sub_matches.value_of("PATH").unwrap()));
+pub fn config<'a>(
+	matches: &'a ArgMatches<'a>
+) -> ui::Config<'a> {
+	let pack = ();
+	let action = get_action(matches);
+	ui::Config {pack, action}
+}
+
+fn get_action<'a>(matches: &'a ArgMatches<'a>) -> ui::Action<'a> {
+	match matches.subcommand() {
+	("adopt", Some(sub_matches)) => {
+		let path = Path::new(sub_matches.value_of("PATH").unwrap());
+		ui::Action::Adopt(path)
+	},
+	(&_, _) =>
+		panic!("No known action specified")
+	}
+}
+
+pub fn run(config: ui::Config) {
+	let mut pack = Pack::new();
+	match config.action {
+		ui::Action::Adopt(path) => pack.adopt(path)
 	}
 }
