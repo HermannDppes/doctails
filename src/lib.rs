@@ -2,16 +2,19 @@ extern crate uuid;
 use uuid::Uuid;
 
 use std::path::Path;
-use std::ffi::OsStr;
 
 use std::collections::HashMap;
 
-#[derive(Debug)]
+#[macro_use]
+extern crate serde_derive;
+extern crate serde;
+
+#[derive(Debug, Serialize, Deserialize)]
 struct Doc {
 	filename: String
 }
 
-#[derive(Debug)]
+#[derive(Debug, Serialize, Deserialize)]
 pub struct Pack {
 	docs: HashMap<Uuid, Doc>
 }

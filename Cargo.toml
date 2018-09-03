@@ -6,3 +6,8 @@ authors = ["Hermann Döppes"]
 [dependencies]
 uuid = {version = "0.6", features = ["serde", "v4"]}
 clap = {version = "~2.32.0"}
+
+# SerDe dependencies
+serde = {version = "1.0"}
+serde_derive = {version = "1.0"}
+serde_cbor = {version = "0.9"}

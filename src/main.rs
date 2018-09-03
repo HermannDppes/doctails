@@ -4,6 +4,9 @@ use doctails::Pack;
 #[macro_use]
 extern crate clap;
 
+extern crate serde;
+extern crate serde_cbor;
+
 mod cli;
 mod ui;
 
