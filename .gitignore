@@ -1,4 +1,6 @@
-/target
+storage/
+
+target/
 **/*.rs.bk
 
 *.sw[pon]

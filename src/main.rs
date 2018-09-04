@@ -7,6 +7,7 @@ extern crate clap;
 extern crate serde;
 extern crate serde_cbor;
 
+// FIXME: Refactor this, it is horrible
 mod cli;
 mod ui;
 
